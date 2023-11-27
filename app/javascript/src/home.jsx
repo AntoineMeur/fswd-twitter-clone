@@ -13,9 +13,11 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/tweets/index')
+    fetch('/api/tweets')
       .then(handleErrors)
       .then(data => {
+        console.log(data);
+
         this.setState({
           tweets: data.tweets,
           loading: false,
@@ -23,10 +25,7 @@ class Home extends React.Component {
       })
   }
 
-  
-
   render () {   
-    
     const { tweets,  loading } = this.state;
     console.log(tweets);
     return (
@@ -36,7 +35,7 @@ class Home extends React.Component {
             {tweets.map(tweet => {
               return (
                 <div key={tweet.id} className="col-6 col-lg-4 mb-4 tweet">                    
-                    <p>{tweet.message}</p>                  
+                  <p>{tweet.message}</p>                  
                 </div>
               )
             })}
