@@ -7,22 +7,18 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 users = User.create([
-  { username: 'Tommy', email: 'tommy@test.com', password: 'password' },
-  { username: 'Bobby', email: 'bobby@test.com', password: 'password' },
-  { username: 'Sarah', email: 'sarah@test.com', password: 'password' },
-  { username: 'Lilly', email: 'lilly@test.com', password: 'password' },
-  { username: 'Jimmy', email: 'jimmy@test.com', password: 'password' },
-  { username: 'Cammy', email: 'cammy@test.com', password: 'password' },
-])
+                      { username: 'Tommy', email: 'tommy@test.com', password: 'password' },
+                      { username: 'Bobby', email: 'bobby@test.com', password: 'password' },
+                      { username: 'Sarah', email: 'sarah@test.com', password: 'password' },
+                      { username: 'Lilly', email: 'lilly@test.com', password: 'password' },
+                      { username: 'Jimmy', email: 'jimmy@test.com', password: 'password' },
+                      { username: 'Cammy', email: 'cammy@test.com', password: 'password' }
+                    ])
 
-
-tweets = Tweet.create([
-    {
-        user: users.first,
-        message: "It'working !"
-    },{
-        user: users.second,
-        message: "Hello World"
-    }
-
-])
+tweets = users.first.tweets.create([
+                                     {
+                                       message: "It'working !"
+                                     }, {
+                                       message: 'Hello World'
+                                     }
+                                   ])
