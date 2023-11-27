@@ -17,12 +17,7 @@ const Layout = (props) => {
         </div>
       </nav>
       {props.children}
-      <footer className="p-3 bg-dark">
-        <div>
-          <p className="me-3 mb-0 text-light">Twitter Clone</p>
-        </div>
-      </footer>
-    </React.Fragment>
+          </React.Fragment>
   );
 }
 

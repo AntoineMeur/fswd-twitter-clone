@@ -1,12 +1,12 @@
-// home.jsx
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '@src/layout';
 import { handleErrors } from '@utils/fetchHelper';
 
-import './home.scss';
+import './tweets.scss';
 
-class Home extends React.Component {
+class Tweets extends React.Component {
   state = {
     tweets: [],
     loading: true,
@@ -35,7 +35,7 @@ class Home extends React.Component {
 
           
 
-            <div className="col-2"> sign up   </div>       
+            <div className="col-2"> tweeeeeeeeeeeets  </div>       
  
            <div className="col-10">
             {tweets.map(tweet => {
@@ -58,7 +58,7 @@ class Home extends React.Component {
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Home />,
+    <Tweets />,
     document.body.appendChild(document.createElement('div')),
   )
 })

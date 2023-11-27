@@ -15,10 +15,13 @@ users = User.create([
                       { username: 'Cammy', email: 'cammy@test.com', password: 'password' }
                     ])
 
+
+
+
 tweets = users.first.tweets.create([
-                                     {
-                                       message: "It'working !"
-                                     }, {
-                                       message: 'Hello World'
-                                     }
-                                   ])
+                      {message: "It'working !"},
+                      {message: "Hello World"}
+                  ])
+          users[2].tweets.create([
+                     {message: "Hey!"}
+                  ])
