@@ -9,5 +9,5 @@ class User < ApplicationRecord
   validates_uniqueness_of :username
   validates_uniqueness_of :email
 
-  
+ 
 end
