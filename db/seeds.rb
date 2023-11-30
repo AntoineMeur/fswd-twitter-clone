@@ -14,14 +14,11 @@ users = User.create([
                       { username: 'Jimmy', email: 'jimmy@test.com', password: 'password' },
                       { username: 'Cammy', email: 'cammy@test.com', password: 'password' }
                     ])
+                    
 
 
+Users.first.tweets.create(message: "It'working !")
+Users.first.tweets.create(message: "Hello world!")
+User.find(2).tweets.create(message: "Hey!")
 
-
-tweets = users.first.tweets.create([
-                      {message: "It'working !"},
-                      {message: "Hello World"}
-                  ])
-          users[2].tweets.create([
-                     {message: "Hey!"}
-                  ])
+tweets = Tweet.all
