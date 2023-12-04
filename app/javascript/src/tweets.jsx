@@ -35,13 +35,13 @@ class Tweets extends React.Component {
 
           
 
-            <div className="col-2"> tweeeeeeeeeeeets  </div>       
+            <div className="col-2"> user.username  </div>       
  
            <div className="col-10">
             {tweets.map(tweet => {
               return (
                 <div key={tweet.id} className="col-12 mb-4 tweet"> 
-                  <a href="#">{tweet.username}</a>                   
+                  <a href="/{:username}">{tweet.username}</a>                   
                   <p>{tweet.message}</p>                  
                 </div>
               )
