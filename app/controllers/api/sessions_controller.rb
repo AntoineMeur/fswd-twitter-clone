@@ -19,7 +19,7 @@ module Api
     end
 
     def authenticated
-      token = cookies.signed[:twitter_session_token]
+      token = cookies.permanent.signed[:twitter_session_token]
       session = Session.find_by(token: token)
 
       if session
@@ -33,7 +33,7 @@ module Api
     end
 
     def destroy
-      token = cookies.signed[:twitter_session_token]
+      token = cookies.permanent.signed[:twitter_session_token]
       session = Session.find_by(token: token)
 
       if session&.destroy

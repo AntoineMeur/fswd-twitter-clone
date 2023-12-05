@@ -9,5 +9,11 @@ class User < ApplicationRecord
   validates_uniqueness_of :username
   validates_uniqueness_of :email
 
- 
+  before_create :encrypt_password
+
+  private
+
+  def encrypt_password
+    self.password = BCrypt::Password.create(password)
+  end
 end
