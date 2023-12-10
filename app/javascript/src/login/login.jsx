@@ -43,7 +43,7 @@ class Login extends React.Component {
       .then(data => {
         if (data.success) {
           const params = new URLSearchParams(window.location.search);
-          const redirect_url = params.get('redirect_url') || '/tweets';
+          const redirect_url = params.get('redirect_url') || '/';
           window.location = redirect_url;
         }
       })
