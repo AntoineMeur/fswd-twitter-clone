@@ -53,6 +53,37 @@ class Username extends React.Component {
       });
   }
 
+
+  handleDeleteTweet = (tweetId) => {
+    fetch(`/api/tweets/${tweetId}`, {
+      method: 'DELETE',
+    })
+      .then(handleErrors)
+      .then(() => {
+        this.setState((prevState) => ({
+          tweets: prevState.tweets.filter(tweet => tweet.id !== tweetId),
+        }));
+      })
+      .catch((error) => {
+        console.error('Error deleting tweet:', error);
+      });
+  }
+
+
+  handleLogout = () => {
+    fetch('/api/sessions', {
+      method: 'DELETE',
+    })
+      .then(handleErrors)
+      .then(() => {
+        window.location.href = '/login';
+      })
+      .catch((error) => {
+        console.error('Error logging out:', error);
+      });
+  }
+
+
   render () {   
     const { tweets, loading, newTweetContent } = this.state;
     console.log(tweets);
@@ -60,7 +91,12 @@ class Username extends React.Component {
       <Layout>
         <div className="container pt-4">
           <div className="row align-items-start">
-            <div className="col-12 mb-4">
+          <div className="col-2"> 
+          <div> {session.user.username}  </div> 
+          <button onClick={this.handleLogout}>log out</button> 
+          </div>
+
+            <div className="col-10 mb-4">
               <textarea
                 value={newTweetContent}
                 onChange={this.handleNewTweetChange}
@@ -73,7 +109,8 @@ class Username extends React.Component {
                 return (
                   <div key={tweet.id} className="col-12 mb-4 tweet"> 
                     <a href="#">{tweet.username}</a>                   
-                    <p>{tweet.message}</p>                  
+                    <p>{tweet.message}</p>
+                    <button onClick={() => this.handleDeleteTweet(tweet.id)}>Delete</button>              
                   </div>
                 )
               })}

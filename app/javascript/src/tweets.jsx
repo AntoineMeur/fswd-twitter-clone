@@ -25,23 +25,38 @@ class Tweets extends React.Component {
       })
   }
 
+
+  handleLogout = () => {
+    fetch('/api/sessions', {
+      method: 'DELETE',
+    })
+      .then(handleErrors)
+      .then(() => {
+        window.location.href = '/login';
+      })
+      .catch((error) => {
+        console.error('Error logging out:', error);
+      });
+  }
+
+
   render () {   
     const { tweets,  loading } = this.state;
     console.log(tweets);
     return (
       <Layout>
         <div className="container pt-4">
-          <div className="row align-items-start">
-
-          
-
-            <div className="col-2"> user.username  </div>       
+          <div className="row align-items-start">        
+            <div className="col-2"> 
+            <div> {session.user.username} </div>    
+            <button onClick={this.handleLogout}>log out</button> 
+            </div>   
  
            <div className="col-10">
             {tweets.map(tweet => {
               return (
                 <div key={tweet.id} className="col-12 mb-4 tweet"> 
-                  <a href="/{:username}">{tweet.username}</a>                   
+                  <a href="#">{tweet.username}</a>                   
                   <p>{tweet.message}</p>                  
                 </div>
               )
