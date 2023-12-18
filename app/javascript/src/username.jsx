@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Layout from '@src/layout';
-import { handleErrors } from '@utils/fetchHelper';
+import {safeCredentials, handleErrors } from '@utils/fetchHelper';
 
 import './username.scss';
 
@@ -34,13 +34,13 @@ class Username extends React.Component {
   handlePostTweet = () => {
     const { newTweetContent } = this.state;
 
-    fetch('/api/tweets', {
+    fetch('/api/tweets', safeCredentials({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ message: newTweetContent }),
-    })
+    }))
       .then(handleErrors)
       .then((data) => {
         this.setState((prevState) => ({
@@ -55,9 +55,9 @@ class Username extends React.Component {
 
 
   handleDeleteTweet = (tweetId) => {
-    fetch(`/api/tweets/${tweetId}`, {
+    fetch(`/api/tweets/${tweetId}`, safeCredentials({
       method: 'DELETE',
-    })
+    }))
       .then(handleErrors)
       .then(() => {
         this.setState((prevState) => ({
@@ -92,7 +92,7 @@ class Username extends React.Component {
         <div className="container pt-4">
           <div className="row align-items-start">
           <div className="col-2"> 
-          <div> {session.user.username}  </div> 
+          <div> session.user.username  </div> 
           <button onClick={this.handleLogout}>log out</button> 
           </div>
 

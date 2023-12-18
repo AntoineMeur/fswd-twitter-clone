@@ -3,6 +3,8 @@ module Api
     def create
       @user = User.find_by(username: params[:user][:username])
 
+      puts '------------- User is not found -------------' if @user.nil?
+
       if @user && (BCrypt::Password.new(@user.password) == params[:user][:password])
         session = @user.sessions.create
         cookies.permanent.signed[:twitter_session_token] = {

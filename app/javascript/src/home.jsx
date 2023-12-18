@@ -31,17 +31,17 @@ class Home extends React.Component {
     return (
       <Layout>
         <div className="container pt-4">
-          <div className="row align-items-start">
-
-          
-
-            <div className="col-2"> sign up   </div>       
+          <div className="row align-items-start">        
+            <div className="col-2"> 
+            <div> session.user.username </div>    
+            <button onClick={this.handleLogout}>log out</button> 
+            </div>   
  
            <div className="col-10">
             {tweets.map(tweet => {
               return (
                 <div key={tweet.id} className="col-12 mb-4 tweet"> 
-                  <a href="#">{tweet.username}</a>                   
+                  <a href={tweet.username}>{tweet.username}</a>                 
                   <p>{tweet.message}</p>                  
                 </div>
               )
