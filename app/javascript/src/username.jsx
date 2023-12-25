@@ -10,19 +10,36 @@ class Username extends React.Component {
     tweets: [],
     loading: true,
     newTweetContent: '', 
+    username: "",
+    userpage: window.location.pathname.replace('/', '')
   }
 
   componentDidMount() {
-    fetch('/api/user/:username/tweets')
-      .then(handleErrors)
-      .then(data => {
-        console.log(data);
 
-        this.setState({
-          tweets: data.tweets,
-          loading: false,
-        })
+
+    fetch('/api/authenticated')
+    .then(handleErrors)
+    .then(data => {
+      console.log(data);
+      this.setState({
+        username: data.username,
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching authenticated user:', error);
+    });
+
+
+    fetch('/api/tweets')
+    .then(handleErrors)
+    .then(data => {
+      console.log(data);
+
+      this.setState({
+        tweets: data.tweets,
+        loading: false,
       })
+    })
   }
 
   handleNewTweetChange = (event) => {
@@ -85,14 +102,14 @@ class Username extends React.Component {
 
 
   render () {   
-    const { tweets, loading, newTweetContent } = this.state;
+    const { tweets, loading, newTweetContent, userpage } = this.state;
     console.log(tweets);
     return (
       <Layout>
         <div className="container pt-4">
           <div className="row align-items-start">
           <div className="col-2"> 
-          <div> session.user.username  </div> 
+          <div> {this.state.username}  </div> 
           <button onClick={this.handleLogout}>log out</button> 
           </div>
 
@@ -101,20 +118,32 @@ class Username extends React.Component {
                 value={newTweetContent}
                 onChange={this.handleNewTweetChange}
                 placeholder="Composez votre tweet..."
+                className="Textarea"
               />
-              <button onClick={this.handlePostTweet}>Post</button>
+              <button onClick={this.handlePostTweet} className="mb-4">Post</button>
+
+              <div>
+              {tweets.reverse().map(tweet => {
+                console.log(tweet.username);
+                console.log(userpage);
+              if (tweet.username === this.state.userpage) {
+              return (
+                <div key={tweet.id} className="col-12 mb-4 tweet"> 
+                <a href="#">{tweet.username}</a>                   
+                <p>{tweet.message}</p>
+                {this.state.userpage === this.state.username ? (
+            <button onClick={() => this.handleDeleteTweet(tweet.id)}>Delete</button>
+          ) : null}         
+        </div>
+      );
+    } 
+  })}
+</div>
+            
+
+
             </div>
-            <div className="col-10">
-              {tweets.map(tweet => {
-                return (
-                  <div key={tweet.id} className="col-12 mb-4 tweet"> 
-                    <a href="#">{tweet.username}</a>                   
-                    <p>{tweet.message}</p>
-                    <button onClick={() => this.handleDeleteTweet(tweet.id)}>Delete</button>              
-                  </div>
-                )
-              })}
-            </div>
+            
 
           </div>
           {loading && <p>loading...</p>}
