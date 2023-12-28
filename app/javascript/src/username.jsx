@@ -86,9 +86,9 @@ class Username extends React.Component {
 
 
   handleLogout = () => {
-    fetch('/api/sessions', {
+    fetch('/api/sessions', safeCredentials({
       method: 'DELETE',
-    })
+    }))
       .then(handleErrors)
       .then(() => {
         window.location.href = '/login';
@@ -111,6 +111,8 @@ class Username extends React.Component {
           <button onClick={this.handleLogout}>log out</button> 
           </div>
             <div className="col-10 mb-4">
+              <h1>{this.state.userpage}</h1>
+              <p>{this.state.userpage} profile</p>
               <textarea
                 value={newTweetContent}
                 onChange={this.handleNewTweetChange}

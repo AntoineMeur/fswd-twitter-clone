@@ -68,6 +68,20 @@ class Home extends React.Component {
       });
   }
 
+  handleLogout = () => {
+    fetch('/api/sessions', safeCredentials({
+      method: 'DELETE',
+    }))
+      .then(handleErrors)
+      .then((data) => {
+        console.log(data);
+        window.location.href = '/login';
+      })
+      .catch((error) => {
+        console.error('Error logging out:', error);
+      });
+  }
+
 
   render () {   
     const { tweets,  loading, newTweetContent } = this.state;
