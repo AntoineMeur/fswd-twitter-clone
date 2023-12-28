@@ -11,9 +11,7 @@ module Api
       user = session.user
       @tweet = user.tweets.new(tweet_params)
 
-      if @tweet.save
-        render 'api/tweets/create'
-      end
+      render 'api/tweets/create' if @tweet.save
     end
 
     def destroy
@@ -40,7 +38,7 @@ module Api
       user = User.find_by(username: params[:username])
 
       if user
-        @tweets = user.tweets
+        @tweets = user.tweets.order(created_at: :desc)
         render 'api/tweets/index'
       end
     end

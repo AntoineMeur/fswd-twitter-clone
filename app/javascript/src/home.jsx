@@ -14,18 +14,9 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/tweets')
-      .then(handleErrors)
-      .then(data => {
-        console.log(data);
+    this.fetchTweets();
 
-        this.setState({
-          tweets: data.tweets,
-          loading: false,
-        })
-      })
-
-      fetch('/api/authenticated')
+    fetch('/api/authenticated')
     .then(handleErrors)
     .then(data => {
       console.log(data);
@@ -36,6 +27,19 @@ class Home extends React.Component {
     .catch(error => {
       console.error('Error fetching authenticated user:', error);
     });
+  }
+
+  fetchTweets = () => {
+    fetch('/api/tweets')
+      .then(handleErrors)
+      .then(data => {
+        console.log(data);
+
+        this.setState({
+          tweets: data.tweets,
+          loading: false,
+        })
+      })
   }
 
   handleNewTweetChange = (event) => {
@@ -57,10 +61,7 @@ class Home extends React.Component {
     }))
       .then(handleErrors)
       .then((data) => {
-        this.setState((prevState) => ({
-          tweets: [...prevState.tweets, data.tweet],
-          newTweetContent: '', 
-        }));
+        this.fetchTweets();
       })
       .catch((error) => {
         console.error('Error posting tweet:', error);
