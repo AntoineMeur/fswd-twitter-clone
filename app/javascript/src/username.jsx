@@ -15,8 +15,6 @@ class Username extends React.Component {
   }
 
   componentDidMount() {
-
-
     fetch('/api/authenticated')
     .then(handleErrors)
     .then(data => {
@@ -29,17 +27,20 @@ class Username extends React.Component {
       console.error('Error fetching authenticated user:', error);
     });
 
+    this.fetchTweets();
+  }
 
+  fetchTweets = () => {
     fetch('/api/tweets')
-    .then(handleErrors)
-    .then(data => {
-      console.log(data);
+      .then(handleErrors)
+      .then(data => {
+        console.log(data);
 
-      this.setState({
-        tweets: data.tweets,
-        loading: false,
+        this.setState({
+          tweets: data.tweets,
+          loading: false,
+        })
       })
-    })
   }
 
   handleNewTweetChange = (event) => {
@@ -60,10 +61,7 @@ class Username extends React.Component {
     }))
       .then(handleErrors)
       .then((data) => {
-        this.setState((prevState) => ({
-          tweets: [...prevState.tweets, data.tweet],
-          newTweetContent: '', 
-        }));
+        this.fetchTweets();
       })
       .catch((error) => {
         console.error('Error posting tweet:', error);
@@ -112,7 +110,6 @@ class Username extends React.Component {
           <div> {this.state.username}  </div> 
           <button onClick={this.handleLogout}>log out</button> 
           </div>
-
             <div className="col-10 mb-4">
               <textarea
                 value={newTweetContent}
@@ -123,28 +120,23 @@ class Username extends React.Component {
               <button onClick={this.handlePostTweet} className="mb-4">Post</button>
 
               <div>
-              {tweets.reverse().map(tweet => {
+              {tweets.map(tweet => {
                 console.log(tweet.username);
                 console.log(userpage);
-              if (tweet.username === this.state.userpage) {
-              return (
-                <div key={tweet.id} className="col-12 mb-4 tweet"> 
-                <a href="#">{tweet.username}</a>                   
-                <p>{tweet.message}</p>
-                {this.state.userpage === this.state.username ? (
-            <button onClick={() => this.handleDeleteTweet(tweet.id)}>Delete</button>
-          ) : null}         
-        </div>
-      );
-    } 
-  })}
-</div>
-            
-
-
+                if (tweet.username === this.state.userpage) {
+                  return (
+                    <div key={tweet.id} className="col-12 mb-4 tweet"> 
+                      <a href="#">{tweet.username}</a>                   
+                      <p>{tweet.message}</p>
+                      {this.state.userpage === this.state.username ? (
+                        <button onClick={() => this.handleDeleteTweet(tweet.id)}>Delete</button>
+                      ) : null}
+                    </div>
+                  );
+                } 
+              })}
             </div>
-            
-
+          </div>
           </div>
           {loading && <p>loading...</p>}
         </div>
